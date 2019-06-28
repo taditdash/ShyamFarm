@@ -22,7 +22,7 @@
         }
 
         AjaxPostCall("/User/LoginUser/", JSON.stringify({ userData: userDetails }), function () {
-            window.location.href = "/";
+            window.location.href = "/Home/";
         }, ErrorUserSave);
     });
 });
