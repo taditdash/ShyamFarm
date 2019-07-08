@@ -15,7 +15,6 @@
     });
 
     $(document).on("click", "#login", function () {
-
         var userDetails = {
             LoginName: $("#userLoginName").val().trim(),
             Key: $("#userPassword").val().trim()
@@ -29,9 +28,10 @@
 
 function SaveUserDetails() {
     try {
-
-        var userDetails = GetModalSubmitValue(".UserDetails");
-        AjaxPostCall("/User/CreateUpdateUserDetails/", JSON.stringify({ userData: userDetails }), SuccessUserSave, ErrorUserSave);
+        if (ValidateForm("#CreateUser")) {
+            var userDetails = GetModalSubmitValue(".UserDetails");
+            AjaxPostCall("/User/CreateUpdateUserDetails/", JSON.stringify({ userData: userDetails }), SuccessUserSave, ErrorUserSave);
+        }
     }
     catch (e) {
         console.log(e.message);

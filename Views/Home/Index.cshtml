@@ -76,7 +76,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-warning card-header-icon">
                                 <div class="card-icon">
@@ -93,15 +93,17 @@
                                     Total spend amount...
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
+                    </div>
+                    <div class="col-md-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-success card-header-icon">
                                 <div class="card-icon">
                                     <i class="material-icons">attach_money</i>
                                 </div>
                                 <h4 class="card-title">
-                                @String.Format("{0:0,0.00}", Model.TotalAmountLeft)
-                                    <small>RS</small>
+                                    @String.Format("{0:0,0.00}", Model.TotalAmountLeft)
+                                    <small>Rs</small>
                                 </h4>
                             </div>
                             <div class="card-footer">
@@ -111,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    @*<div class="col-md-4">
                         <div class="card card-chart">
                             <div class="card-header card-header-success">
                                 <div class="ct-chart" id="dailySalesChart"></div>
@@ -142,7 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
@@ -166,7 +168,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="taskDataDetails">
-                                        @foreach(var task in Model.TaskData.Take(5))
+                                        @foreach(var task in Model.TaskData.OrderByDescending(x=>x.TaskId).Take(5))
                                         {
                                             <tr>
                                                 <td>@Html.Raw(@task.Task.Replace("\n", "<br />"))</td>
@@ -254,7 +256,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary saveUserDetails">Save</button>
+                    <button type="button" class="btn btn-primary saveUserDetails" data-dismiss="modal">Save</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -275,7 +277,7 @@
                     <form>
                         <div class="form-group">
                             <label for="totalAmountSpendOnThisTask">Amount Spend:</label>
-                            <input type="text" class="form-control" 
+                            <input type="number" class="form-control" 
                                    data-required 
                                    data-required-message="Please enter money spend."
                                    id="totalAmountSpendOnThisTask" 
@@ -294,7 +296,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary saveTaskDetails">Save</button>
+                    <button type="button" class="btn btn-primary saveTaskDetails" data-dismiss="modal">Save</button>
                 </div>
             </div>
             <!-- /.modal-content -->

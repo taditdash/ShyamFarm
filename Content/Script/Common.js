@@ -145,7 +145,7 @@ function ValidateForm(selector) {
         }
     });
     $(selector).find("[data-number]:visible").each(function () {
-        if (Number($(this).val()) != NaN) {
+        if (!isNaN($(this).val().trim())) {
             errorMessage += $(this).attr("data-number-message") + "<br />";
         }
     });
@@ -166,5 +166,5 @@ function ValidateForm(selector) {
 
 function ShowAlert(message) {
     $("#globalAlertModalBody").html(message);
-    $("#globalAlertModal").show();
+    $("#globalAlertModal").modal('show');
 }

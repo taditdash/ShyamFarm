@@ -92,22 +92,25 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="taskDataDetails">
+                                    <tbody id="taskDataDetails" data-user-id="@Session["UserId"]">
                                         @foreach (var task in Model.TaskData)
                                         {
-                                            <tr>
+                                            <tr data-id="@task.TaskId">
                                                 <td>@task.TaskId</td>
-                                                <td>@Html.Raw(@task.Task.Replace("\n", "<br />"))</td>
+                                                <td class="taskData" data-task="@task.Task">@Html.Raw(@task.Task.Replace("\n", "<br />"))</td>
                                                 <td>@task.UserName</td>
-                                                <td>@String.Format("{0:0,0.00}", task.MoneySpend)</td>
+                                                <td class="moneySpend" data-money-spend="@task.MoneySpend">@String.Format("{0:0,0.00}", task.MoneySpend)</td>
                                                 <td>@task.CreatedDate</td>
                                                 <td>
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                                    @if (task.UserId == Convert.ToInt32(Session["UserId"]))
+                                                    {
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm editTaskDetails">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm deleteTaskDetails">
                                                         <i class="material-icons">close</i>
                                                     </button>
+                                                    }
                                                 </td>
                                             </tr>
                                         }
@@ -125,6 +128,48 @@
 </div>
 
 
+
+<div class="modal fade" tabindex="-1" role="dialog" id="taskCompleted" data-id="0" data-prop-name="TaskId">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Task Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body homeTaskDataDetails">
+                <form>
+                    <div class="form-group">
+                        <label for="totalAmountSpendOnThisTask">Amount Spend:</label>
+                        <input type="number" class="form-control"
+                               data-required
+                               data-required-message="Please enter money spend."
+                               id="totalAmountSpendOnThisTask"
+                               data-prop-name="MoneySpend" />
+                    </div>
+                    <div class="form-group">
+                        <label for="taksNote">Note:</label>
+                        <textarea class="form-control"
+                                  id="taksNote"
+                                  rows="10"
+                                  data-required
+                                  data-required-message="Please enter why you spend money."
+                                  data-prop-name="Task"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveTaskDetails" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
 <script src="/Content/Theme/assets/js/core/jquery.min.js"></script>
 <script src="/Content/Theme/assets/js/core/popper.min.js"></script>
 <script src="/Content/Theme/assets/js/core/bootstrap-material-design.min.js"></script>
+<script src="/Content/Script/Task.js"></script>
